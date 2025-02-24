@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package cache;
+
+service CacheService {
+    rpc Get (GetRequest) returns (GetResponse);
+    rpc Set (SetRequest) returns (SetResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+    rpc Heartbeat (HeartbeatRequest) returns (HeartbeatResponse);  // 健康检查接口
+}
+
+service CoordinatorService {
+    rpc RegisterNode (RegisterNodeRequest) returns (RegisterNodeResponse);
+    rpc GetNodes (GetNodesRequest) returns (GetNodesResponse);  // 获取多个节点
+}
+
+message GetRequest {
+    string key = 1;
+}
+
+message GetResponse {
+    bytes value = 1;
+    bool found = 2;
+}
+
+message SetRequest {
+    string key = 1;
+    bytes value = 2;
+}
+
+message SetResponse {
+    bool success = 1;
+}
+
+message DeleteRequest {
+    string key = 1;
+}
+
+message DeleteResponse {
+    bool success = 1;
+}
+
+message HeartbeatRequest {}
+
+message HeartbeatResponse {
+    bool success = 1;
+}
+
+message RegisterNodeRequest {
+    string address = 1;
+}
+
+message RegisterNodeResponse {
+    bool success = 1;
+}
+
+message GetNodesRequest {
+    string key = 1;
+}
+
+message GetNodesResponse {
+    repeated string addresses = 1;  // 返回多个节点地址
+}

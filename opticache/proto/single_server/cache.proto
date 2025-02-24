@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package cache;
+
+service CacheService {
+    rpc Get (GetRequest) returns (GetResponse);
+    rpc Set (SetRequest) returns (SetResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest {
+    string key = 1;
+}
+
+message GetResponse {
+    bytes value = 1;  // 使用 bytes 类型
+    bool found = 2;
+}
+
+message SetRequest {
+    string key = 1;
+    bytes value = 2;  // 使用 bytes 类型
+}
+
+message SetResponse {
+    bool success = 1;
+}
+
+message DeleteRequest {
+    string key = 1;
+}
+
+message DeleteResponse {
+    bool success = 1;
+}
